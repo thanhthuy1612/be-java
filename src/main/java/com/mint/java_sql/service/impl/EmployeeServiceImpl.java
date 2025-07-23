@@ -1,7 +1,7 @@
 package com.mint.java_sql.service.impl;
 
 import com.mint.java_sql.base.service.impl.BaseServiceImpl;
-import com.mint.java_sql.dto.EmployeeDto;
+import com.mint.java_sql.dto.request.EmployeeDto;
 import com.mint.java_sql.entity.Employee;
 import com.mint.java_sql.mapper.EmployeeMapper;
 import com.mint.java_sql.repository.EmployeeRepository;

@@ -1,6 +1,6 @@
 package com.mint.java_sql.service;
 
-import com.mint.java_sql.dto.TokenPairDto;
+import com.mint.java_sql.dto.request.TokenPairDto;
 import io.jsonwebtoken.Claims;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;

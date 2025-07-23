@@ -1,4 +1,4 @@
-package com.mint.java_sql.dto;
+package com.mint.java_sql.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;

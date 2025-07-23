@@ -1,6 +1,6 @@
-package com.mint.java_sql.dto;
+package com.mint.java_sql.dto.request;
 
-import com.mint.java_sql.entity.Role;
+import com.mint.java_sql.dto.validator.EnumRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,5 +26,5 @@ public class RegisterRequestDto {
     @Size(min = 8, message = "Password must be at least 8 characters")
     private String password;
 
-    private Role role;
+    private EnumRole role;
 }

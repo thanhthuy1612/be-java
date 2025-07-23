@@ -2,9 +2,9 @@ package com.mint.java_sql.base.controller;
 
 import com.mint.java_sql.base.dto.BaseDto;
 import com.mint.java_sql.base.service.BaseService;
+import com.mint.java_sql.dto.response.ResponseData;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,39 +15,39 @@ public abstract class BaseController<Dto extends BaseDto, Service extends BaseSe
 
     // Build Add REST API
     @PostMapping
-    public ResponseEntity<Dto> create(@RequestBody Dto entity) {
+    public ResponseData<Dto> create(@RequestBody Dto entity) {
         Dto saved = service().create(entity);
-        return new ResponseEntity<Dto>(saved, HttpStatus.CREATED);
+        return new ResponseData<Dto>(HttpStatus.CREATED.value(), "Created successfully", saved);
     }
 
     // Build Get REST API
     @SneakyThrows
     @GetMapping("{id}")
-    public ResponseEntity<Dto> getById(@PathVariable("id") Long id) {
+    public ResponseData<Dto> getById(@PathVariable("id") Long id) {
         Dto dto = service().getById(id);
-        return ResponseEntity.ok(dto);
+        return new ResponseData<>(HttpStatus.OK.value(), "", dto);
     }
 
     // Build Get All REST API
     @GetMapping
-    public ResponseEntity<List<Dto>> getAll() {
+    public ResponseData<List<Dto>> getAll() {
         List<Dto> listDto = service().getAll();
-        return ResponseEntity.ok(listDto);
+        return new ResponseData<>(HttpStatus.OK.value(), "", listDto);
     }
 
     // Build Get  REST API
     @SneakyThrows
     @PutMapping("{id}")
-    public ResponseEntity<Dto> update(@PathVariable("id") Long id, @RequestBody Dto dto) {
+    public ResponseData<Dto> update(@PathVariable("id") Long id, @RequestBody Dto dto) {
         Dto newDto = service().update(id, dto);
-        return ResponseEntity.ok(newDto);
+        return new ResponseData<>(HttpStatus.OK.value(), "", newDto);
     }
 
     // Build Get  REST API
     @SneakyThrows
     @DeleteMapping("{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+    public ResponseData<String> delete(@PathVariable("id") Long id) {
         service().delete(id);
-        return ResponseEntity.ok("Deleted successfully!");
+        return new ResponseData<>(HttpStatus.OK.value(), "Deleted successfully!");
     }
 }

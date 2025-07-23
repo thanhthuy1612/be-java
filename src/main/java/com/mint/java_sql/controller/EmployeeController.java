@@ -1,7 +1,7 @@
 package com.mint.java_sql.controller;
 
 import com.mint.java_sql.base.controller.BaseController;
-import com.mint.java_sql.dto.EmployeeDto;
+import com.mint.java_sql.dto.request.EmployeeDto;
 import com.mint.java_sql.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

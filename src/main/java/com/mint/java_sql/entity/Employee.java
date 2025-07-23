@@ -1,6 +1,7 @@
 package com.mint.java_sql.entity;
 
 import com.mint.java_sql.base.entity.BaseEntity;
+import com.mint.java_sql.dto.validator.EnumRole;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,6 +29,6 @@ public class Employee extends BaseEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private EnumRole role;
 
 }

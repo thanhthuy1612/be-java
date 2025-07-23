@@ -1,10 +1,11 @@
 package com.mint.java_sql.service.impl;
 
-import com.mint.java_sql.dto.AuthenticationDto;
-import com.mint.java_sql.dto.RefreshTokenRequestDto;
-import com.mint.java_sql.dto.RegisterRequestDto;
-import com.mint.java_sql.dto.TokenPairDto;
+import com.mint.java_sql.dto.request.AuthenticationDto;
+import com.mint.java_sql.dto.request.RefreshTokenRequestDto;
+import com.mint.java_sql.dto.request.RegisterRequestDto;
+import com.mint.java_sql.dto.request.TokenPairDto;
 import com.mint.java_sql.entity.Employee;
+import com.mint.java_sql.exception.ResourceNotFoundException;
 import com.mint.java_sql.repository.EmployeeRepository;
 import com.mint.java_sql.service.AuthenticationService;
 import com.mint.java_sql.service.JwtService;
@@ -31,7 +32,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void registerEmployee(RegisterRequestDto registerRequest) {
         // Check if user with the same username already exist
         if (employeeRepository.existsByUsername(registerRequest.getUsername())) {
-            throw new IllegalArgumentException("Username is already in use");
+            throw new ResourceNotFoundException("Username is already in use");
         }
 
         // Create new user
@@ -68,14 +69,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String refreshToken = request.getRefreshToken();
         // check if it is valid refresh token
         if (!jwtService.isRefreshToken(refreshToken)) {
-            throw new IllegalArgumentException("Invalid refresh token");
+            throw new ResourceNotFoundException("Invalid refresh token");
         }
 
         String user = jwtService.extractUsernameFromToken(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user);
 
         if (userDetails == null) {
-            throw new IllegalArgumentException("User not found");
+            throw new ResourceNotFoundException("User not found");
         }
 
         UsernamePasswordAuthenticationToken authentication =

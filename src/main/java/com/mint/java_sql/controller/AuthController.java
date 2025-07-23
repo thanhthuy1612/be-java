@@ -1,9 +1,9 @@
 package com.mint.java_sql.controller;
 
-import com.mint.java_sql.dto.AuthenticationDto;
-import com.mint.java_sql.dto.RefreshTokenRequestDto;
-import com.mint.java_sql.dto.RegisterRequestDto;
-import com.mint.java_sql.dto.TokenPairDto;
+import com.mint.java_sql.dto.request.AuthenticationDto;
+import com.mint.java_sql.dto.request.RefreshTokenRequestDto;
+import com.mint.java_sql.dto.request.RegisterRequestDto;
+import com.mint.java_sql.dto.request.TokenPairDto;
 import com.mint.java_sql.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.mint.java_sql.mapper;
 
 import com.mint.java_sql.base.mapper.BaseMapper;
-import com.mint.java_sql.dto.EmployeeDto;
+import com.mint.java_sql.dto.request.EmployeeDto;
 import com.mint.java_sql.entity.Employee;
 import org.springframework.stereotype.Component;
 

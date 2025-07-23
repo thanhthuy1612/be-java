@@ -1,6 +1,6 @@
 package com.mint.java_sql.service.impl;
 
-import com.mint.java_sql.dto.TokenPairDto;
+import com.mint.java_sql.dto.request.TokenPairDto;
 import com.mint.java_sql.service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
