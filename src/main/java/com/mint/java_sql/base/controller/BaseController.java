@@ -2,6 +2,7 @@ package com.mint.java_sql.base.controller;
 
 import com.mint.java_sql.base.dto.BaseDto;
 import com.mint.java_sql.base.service.BaseService;
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.dto.response.ResponseData;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public abstract class BaseController<Dto extends BaseDto, Service extends BaseSe
     @PostMapping
     public ResponseData<Dto> create(@RequestBody Dto entity) {
         Dto saved = service().create(entity);
-        return new ResponseData<Dto>(HttpStatus.CREATED.value(), "Created successfully", saved);
+        return new ResponseData<Dto>(HttpStatus.CREATED.value(), Translator.toLocale("create.successfully"), saved);
     }
 
     // Build Get REST API
@@ -40,7 +41,7 @@ public abstract class BaseController<Dto extends BaseDto, Service extends BaseSe
     @PutMapping("{id}")
     public ResponseData<Dto> update(@PathVariable("id") Long id, @RequestBody Dto dto) {
         Dto newDto = service().update(id, dto);
-        return new ResponseData<>(HttpStatus.OK.value(), "", newDto);
+        return new ResponseData<>(HttpStatus.OK.value(), Translator.toLocale("update.successfully"), newDto);
     }
 
     // Build Get  REST API
@@ -48,6 +49,6 @@ public abstract class BaseController<Dto extends BaseDto, Service extends BaseSe
     @DeleteMapping("{id}")
     public ResponseData<String> delete(@PathVariable("id") Long id) {
         service().delete(id);
-        return new ResponseData<>(HttpStatus.OK.value(), "Deleted successfully!");
+        return new ResponseData<>(HttpStatus.OK.value(), Translator.toLocale("delete.successfully"));
     }
 }

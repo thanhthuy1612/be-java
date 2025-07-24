@@ -14,16 +14,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RegisterRequestDto {
-    @NotBlank(message = "Username is required")
-    @Size(min = 3, max = 10, message = "Username must be between 3 and 10 characters")
+    @NotBlank(message = "{username.required}")
+    @Size(min = 3, max = 10, message = "{username.length}")
     private String username;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "{email.required}")
+    @Email(message = "{email.valid}")
     private String email;
 
-    @NotBlank(message = "Password is required")
-    @Size(min = 8, message = "Password must be at least 8 characters")
+    @NotBlank(message = "{password.required}")
+    @Size(min = 8, message = "{password.length}")
     private String password;
 
     private EnumRole role;

@@ -1,5 +1,6 @@
 package com.mint.java_sql.service.impl;
 
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.dto.request.AuthenticationDto;
 import com.mint.java_sql.dto.request.RefreshTokenRequestDto;
 import com.mint.java_sql.dto.request.RegisterRequestDto;
@@ -32,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public void registerEmployee(RegisterRequestDto registerRequest) {
         // Check if user with the same username already exist
         if (employeeRepository.existsByUsername(registerRequest.getUsername())) {
-            throw new ResourceNotFoundException("Username is already in use");
+            throw new ResourceNotFoundException(Translator.toLocale("username.use"));
         }
 
         // Create new user
@@ -69,14 +70,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         String refreshToken = request.getRefreshToken();
         // check if it is valid refresh token
         if (!jwtService.isRefreshToken(refreshToken)) {
-            throw new ResourceNotFoundException("Invalid refresh token");
+            throw new ResourceNotFoundException(Translator.toLocale("invalid.refresh.token"));
         }
 
         String user = jwtService.extractUsernameFromToken(refreshToken);
         UserDetails userDetails = userDetailsService.loadUserByUsername(user);
 
         if (userDetails == null) {
-            throw new ResourceNotFoundException("User not found");
+            throw new ResourceNotFoundException(Translator.toLocale("user.not.found"));
         }
 
         UsernamePasswordAuthenticationToken authentication =

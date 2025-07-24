@@ -1,12 +1,15 @@
 package com.mint.java_sql.controller;
 
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.dto.request.AuthenticationDto;
 import com.mint.java_sql.dto.request.RefreshTokenRequestDto;
 import com.mint.java_sql.dto.request.RegisterRequestDto;
 import com.mint.java_sql.dto.request.TokenPairDto;
+import com.mint.java_sql.dto.response.ResponseData;
 import com.mint.java_sql.service.AuthenticationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,21 +23,21 @@ public class AuthController {
     private final AuthenticationService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto request) {
+    public ResponseData<String> registerUser(@Valid @RequestBody RegisterRequestDto request) {
         // Save the new user to the database and return success response.
         authService.registerEmployee(request);
-        return ResponseEntity.ok("User registered successfully");
+        return new ResponseData<>(HttpStatus.CREATED.value(), Translator.toLocale("register.successfully"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationDto loginRequest) {
+    public ResponseData<TokenPairDto> login(@Valid @RequestBody AuthenticationDto loginRequest) {
         TokenPairDto tokenPair = authService.login(loginRequest);
-        return ResponseEntity.ok(tokenPair);
+        return new ResponseData<>(HttpStatus.OK.value(), Translator.toLocale("login.successfully"), tokenPair);
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<?> refreshToken(@Valid @RequestBody RefreshTokenRequestDto request) {
+    public ResponseData<TokenPairDto> refreshToken(@Valid @RequestBody RefreshTokenRequestDto request) {
         TokenPairDto tokenPair = authService.refreshToken(request);
-        return ResponseEntity.ok(tokenPair);
+        return new ResponseData<>(HttpStatus.OK.value(), Translator.toLocale("refresh.token.successfully"),tokenPair);
     }
 }

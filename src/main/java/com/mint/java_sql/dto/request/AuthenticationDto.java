@@ -7,8 +7,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationDto {
-    @NotBlank(message = "Username is required")
+    @NotBlank(message = "{username.required}")
     private String username;
-    @NotBlank(message = "Password is required")
+    @NotBlank(message = "{password.required}")
     private String password;
 }

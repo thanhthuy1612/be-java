@@ -5,6 +5,7 @@ import com.mint.java_sql.base.entity.BaseEntity;
 import com.mint.java_sql.base.mapper.BaseMapper;
 import com.mint.java_sql.base.repository.BaseRepository;
 import com.mint.java_sql.base.service.BaseService;
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.exception.ResourceNotFoundException;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public abstract class BaseServiceImpl<Entity extends BaseEntity, Dto extends BaseDto, Repository extends BaseRepository<Entity>, Mapper extends BaseMapper<Entity, Dto>> implements BaseService<Dto> {
+public abstract class BaseServiceImpl<
+        Entity extends BaseEntity,
+        Dto extends BaseDto,
+        Repository extends BaseRepository<Entity>,
+        Mapper extends BaseMapper<Entity, Dto>
+        >
+        implements BaseService<Dto> {
     public abstract Repository repository();
 
     public abstract Mapper mapper();
@@ -32,8 +39,8 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity, Dto extends Bas
     public Dto getById(Long id) throws ResourceNotFoundException {
         Entity entity = repository().findById(id)
                 .orElseThrow(() -> {
-                    System.out.println("Entity"+ id);
-                    return new ResourceNotFoundException("Is not exits with given id: " + id);
+                    System.out.println("Entity" + id);
+                    return new ResourceNotFoundException(Translator.toLocale("is.not.exit.id") + id);
                 });
         return mapper().mapToDto(entity);
     }
@@ -47,7 +54,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity, Dto extends Bas
     @SneakyThrows
     @Override
     public Dto update(Long id, Dto dto) throws ResourceNotFoundException {
-        repository().findById(id).orElseThrow(() -> new ResourceNotFoundException("Is not exits with given id: " + id));
+        repository().findById(id).orElseThrow(() -> new ResourceNotFoundException(Translator.toLocale("is.not.exit.id") + id));
         Entity newEntity = mapper().mapToEntity(dto);
         newEntity.setId(id);
         Entity updated = repository().save(newEntity);
@@ -57,7 +64,7 @@ public abstract class BaseServiceImpl<Entity extends BaseEntity, Dto extends Bas
     @SneakyThrows
     @Override
     public void delete(Long id) throws ResourceNotFoundException {
-        repository().findById(id).orElseThrow(() -> new ResourceNotFoundException("Is not exits with given id: " + id));
+        repository().findById(id).orElseThrow(() -> new ResourceNotFoundException(Translator.toLocale("is.not.exit.id") + id));
         repository().deleteById(id);
     }
 }

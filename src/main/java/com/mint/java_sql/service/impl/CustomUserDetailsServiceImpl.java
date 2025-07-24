@@ -1,5 +1,6 @@
 package com.mint.java_sql.service.impl;
 
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.entity.Employee;
 import com.mint.java_sql.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Employee user = employeeRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(Translator.toLocale("user.not.found")));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

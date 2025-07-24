@@ -1,5 +1,6 @@
 package com.mint.java_sql.service.impl;
 
+import com.mint.java_sql.config.Translator;
 import com.mint.java_sql.dto.request.TokenPairDto;
 import com.mint.java_sql.service.JwtService;
 import io.jsonwebtoken.Claims;
@@ -122,7 +123,7 @@ public class JwtServiceImpl implements JwtService {
     public SecretKey getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
         if (keyBytes.length * 8 < 256) {
-            throw new IllegalArgumentException("The specified key is not secure enough.");
+            throw new IllegalArgumentException(Translator.toLocale("not.secure.enough"));
         }
         return Keys.hmacShaKeyFor(keyBytes);
     }
