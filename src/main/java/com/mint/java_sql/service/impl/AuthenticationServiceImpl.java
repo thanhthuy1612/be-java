@@ -12,6 +12,7 @@ import com.mint.java_sql.service.AuthenticationService;
 import com.mint.java_sql.service.JwtService;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -50,19 +51,25 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public TokenPairDto login(AuthenticationDto loginRequest) {
-        // Authenticate the user
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getUsername(),
-                        loginRequest.getPassword()
-                )
-        );
+        try {
+            // Authenticate the user
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.getUsername(),
+                            loginRequest.getPassword()
+                    )
+            );
 
-        // Set authentication in security context
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+            // Set authentication in security context
+            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Generate Token Pair
-        return jwtService.generateTokenPair(authentication);
+            // Generate Token Pair
+            return jwtService.generateTokenPair(authentication);
+        } catch (BadCredentialsException e) {
+            throw new ResourceNotFoundException(Translator.toLocale("user.password.invalid"));
+        } catch (Exception e) {
+            throw new ResourceNotFoundException(Translator.toLocale("authen.failed") + e.getMessage());
+        }
     }
 
     @Override
